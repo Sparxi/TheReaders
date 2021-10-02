@@ -1,0 +1,14 @@
+<Readers>
+      
+  <Name>Jakub Macko</Name>
+      
+  <BooksPerWeek>5</BooksPerWeek>
+      
+  <FavouriteGenres>
+            
+    <Genre>Natural literature</Genre>
+            
+    <Genre>Rumantic literature</Genre>
+        
+  </FavouriteGenres>
+</Readers>
