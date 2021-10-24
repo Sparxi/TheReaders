@@ -1,14 +1,15 @@
-<Readers>
-      
-  <Name>Jakub Macko</Name>
-      
-  <BooksPerWeek>5</BooksPerWeek>
-      
-  <FavouriteGenres>
+<author>
             
-    <Genre>Natural literature</Genre>
+  <name>Jakub Macko</name>
             
-    <Genre>Rumantic literature</Genre>
-        
-  </FavouriteGenres>
-</Readers>
+  <book genre="Rumantická Literatúra">
+                  
+    <title>Čitateľ 1. úrovne</title>
+                  
+    <pageCount>9</pageCount>
+                  
+    <damaged>false</damaged>
+              
+  </book>
+            
+</author>

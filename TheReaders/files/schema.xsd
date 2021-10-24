@@ -1,18 +1,21 @@
 <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:element name="Readers">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element type="xs:string" name="Name"/>
-        <xs:element type="xs:integer" name="BooksPerWeek"/>
-        <xs:element name="FavouriteGenres">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element type="xs:string" name="Genre" maxOccurs="unbounded" minOccurs="0"/>
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
+	<xs:element name="author">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element type="xs:string" name="name"/>
+				<xs:element name="book">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element type="xs:string" name="title"/>
+							<xs:element type="xs:integer" name="pageCount"/>
+							<xs:element type="xs:string" name="damaged"/>
+						</xs:sequence>
+						<xs:attribute type="xs:string" name="genre"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
 </xs:schema>
+
 
