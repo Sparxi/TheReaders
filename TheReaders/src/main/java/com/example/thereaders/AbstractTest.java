@@ -1,9 +1,6 @@
 package com.example.thereaders;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 
 import org.apache.xml.security.exceptions.Base64DecodingException;
 import org.apache.xml.security.utils.Base64;
@@ -11,12 +8,16 @@ import org.apache.xml.security.utils.Base64;
 public class AbstractTest {
 
 	static public InputStream getResourceAsStream(String name) {
-		String path = new File("resources", name).getPath();
-		InputStream is = AbstractTest.class.getResourceAsStream(path);
-		if (is == null) {
-			throw new RuntimeException("Nepodarilo sa otvorit zdroj: " + path);
+		try {
+			InputStream is = new FileInputStream(name);
+			if (is == null) {
+				throw new RuntimeException("Nepodarilo sa otvorit zdroj: " + name);
+			}
+			return is;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return null;
 		}
-		return is;
 	}
 
 	static public String readResource(String name) throws IOException {

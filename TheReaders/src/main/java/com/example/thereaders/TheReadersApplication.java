@@ -35,6 +35,7 @@ public class TheReadersApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(TheReadersApplication.class, args);
+        System.setProperty("java.awt.headless", "false");
     }
 
     @CrossOrigin
@@ -75,6 +76,7 @@ public class TheReadersApplication {
             DOMSource source = new DOMSource(doc);
             transformer.transform(source, result);
             String formatedXML = result.getWriter().toString();
+            formatedXML = formatedXML.replace(">\n            ",">");
             FileWriter fw = new FileWriter("./files/readers.xml");
             fw.write(formatedXML);
             fw.close();
@@ -121,9 +123,9 @@ public class TheReadersApplication {
     @CrossOrigin
     @PostMapping("/sign")
     public ResponseEntity<String> signXML(){
-      Signer signer = new Signer();
-      signer.sign();
-      return new ResponseEntity<>(HttpStatus.OK);
+        Signer signer = new Signer();
+        signer.sign();
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     private String readXML(HttpServletRequest request) {
