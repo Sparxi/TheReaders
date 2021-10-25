@@ -7,7 +7,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.w3c.dom.Document;
@@ -118,6 +117,13 @@ public class TheReadersApplication {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+    @CrossOrigin
+    @PostMapping("/sign")
+    public ResponseEntity<String> signXML(){
+      Signer signer = new Signer();
+      signer.sign();
+      return new ResponseEntity<>(HttpStatus.OK);
     }
 
     private String readXML(HttpServletRequest request) {
