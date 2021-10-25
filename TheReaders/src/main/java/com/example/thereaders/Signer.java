@@ -31,7 +31,7 @@ public class Signer extends AbstractTest {
 					"XML",
 					readResource(xmlPath),
 					readResource(xsdPath),
-					"http://www.example.org/sipvs",
+					"",
 					DEFAULT_XSD_REF,
 					readResource(xsltPath),
 					DEFAULT_XSLT_REF,
@@ -53,7 +53,7 @@ public class Signer extends AbstractTest {
 			return;
 		}
 
-		rc = dSigner.sign20("signatureId20", "http://www.w3.org/2001/04/xmlenc#sha256", "urn:oid:1.3.158.36061701.1.2.2", "dataEnvelopeId",
+		rc = dSigner.sign20("signatureId20", "http://www.w3.org/2001/04/xmlenc#sha256", "urn:oid:1.3.158.36061701.1.2.3", "dataEnvelopeId",
 				"dataEnvelopeURI", "dataEnvelopeDescr", xadesSig -> {
 					if (xadesSig.getErrorMessage() != null)
 					{
