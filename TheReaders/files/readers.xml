@@ -1,15 +1,1 @@
-<author>
-            
-  <name>Jakub Macko</name>
-            
-  <book genre="Rumantická Literatúra">
-                  
-    <title>Čitateľ 1. úrovne</title>
-                  
-    <pageCount>9</pageCount>
-                  
-    <damaged>false</damaged>
-              
-  </book>
-            
-</author>
+<author>          <name>karin</name>          <book genre="ruman">              <title>harry potter</title>              <pageCount>1234</pageCount>              <damaged>true</damaged>          </book>          </author>
