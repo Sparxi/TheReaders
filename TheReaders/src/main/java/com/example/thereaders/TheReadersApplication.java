@@ -128,6 +128,18 @@ public class TheReadersApplication {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @CrossOrigin
+    @PostMapping("/timestamp")
+    public ResponseEntity<String> timestamp(){
+        TimeStamp timestamp = new TimeStamp();
+        try {
+            timestamp.addTimeStampToXML("./signed_xml.xml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     private String readXML(HttpServletRequest request) {
         try {
             String str, wholeXML = "";
@@ -141,6 +153,7 @@ public class TheReadersApplication {
             return null;
         }
     }
+
     private String validate(String XML){
         try {
             SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
