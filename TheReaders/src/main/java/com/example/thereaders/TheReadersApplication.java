@@ -167,4 +167,11 @@ public class TheReadersApplication {
         }
         return null;
     }
+
+    @CrossOrigin
+    @PostMapping("/verify")
+    private ResponseEntity<String> verify(){
+        DocumentVerificator documentVerificator = new DocumentVerificator().verifyDocuments();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

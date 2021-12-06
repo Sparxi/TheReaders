@@ -1,1 +1,1 @@
-<author>          <name>nikci</name>          <book genre="a">              <title>harry potter</title>              <pageCount>12</pageCount>              <damaged>true</damaged>          </book>          </author>
+<author>          <name>nikoleta</name>          <book genre="roman">              <title>harry potter</title>              <pageCount>12</pageCount>              <damaged>false</damaged>          </book>          </author>
