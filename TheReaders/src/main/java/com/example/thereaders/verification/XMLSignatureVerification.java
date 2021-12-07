@@ -290,23 +290,23 @@ public class XMLSignatureVerification {
 						String.format("//ds:Signature//*[@Id='%s']", uri));
 				
 			} catch (XPathException e) {
-				throw new InvalidDocumentException("Error verifying existence of reference in ds:SignedInfo. Error getting element with Id " + uri);
+				throw new InvalidDocumentException("Chyba overenia existencie referencií v ds:SignedInfo. Chyba získania elementu s Id " + uri);
 			}
 			
 			if (referencedElement == null) {
-				throw new InvalidDocumentException("Error verifying existence of reference in ds:SignedInfo. Element does exist with Id: " + uri);
+				throw new InvalidDocumentException("Chyba overenia existencie referencií ds:SignedInfo. Element s Id : " + uri + " neexistuje !");
 			}
 			
 			String referencedElementName = referencedElement.getNodeName();
 			
 			if (REFERENCES.containsKey(referencedElementName) == false) {
-				throw new InvalidDocumentException("Error verifying the existence of references in ds:SignedInfo. Unknown reference " + referencedElementName);
+				throw new InvalidDocumentException("Chyba overenia existencie referencií v ds:SignedInfo. Neznáma referencia " + referencedElementName);
 			}
 			
 			String expectedReferenceType = REFERENCES.get(referencedElementName);
 			
 			if (actualType.equals(expectedReferenceType) == false) {
-				throw new InvalidDocumentException("Error verifying match of references in ds:SignedInfo. " + actualType + " does not match " + expectedReferenceType);
+				throw new InvalidDocumentException("Chyba overenia existencie referencií v ds:SignedInfo. " + actualType + " sa nezhoduje s " + expectedReferenceType);
 			}
 			
 			Element keyInfoReferenceElement = null;
@@ -316,12 +316,12 @@ public class XMLSignatureVerification {
 				
 			} catch (XPathException e) {
 				throw new InvalidDocumentException(
-						"Error verifying the existence of references in ds:SignedInfo." +
-						"Error getting element with Type http://www.w3.org/2000/09/xmldsig#Object");
+						"Chyba overenia existencie referencií v ds:SignedInfo." +
+						"Chyba získania elementu Type http://www.w3.org/2000/09/xmldsig#Object");
 			}
 			
 			if (keyInfoReferenceElement == null) {
-				throw new InvalidDocumentException("No reference in ds:KeyInfo element for ds:Reference element");
+				throw new InvalidDocumentException("Chýba referencia ds:KeyInfo elementu na ds:Reference element");
 			}
 			
 			Element signaturePropertieReferenceElement = null;
@@ -331,12 +331,12 @@ public class XMLSignatureVerification {
 				
 			} catch (XPathException e) {
 				throw new InvalidDocumentException(
-						"Error verifying the existence of references in ds:SignedInfo." +
-						"Error getting element with Type http://www.w3.org/2000/09/xmldsig#SignatureProperties");
+						"Chyba overenia existencie referencií v ds:SignedInfo." +
+						"Chyba získania elementu Type http://www.w3.org/2000/09/xmldsig#SignatureProperties");
 			}
 			
 			if (signaturePropertieReferenceElement == null) {
-				throw new InvalidDocumentException("No reference in ds:SignatureProperties element for ds:Reference element");
+				throw new InvalidDocumentException("Chýba referencia ds:SignatureProperties element na ds:Reference element");
 			}
 			
 			Element signedInfoReferenceElement = null;
@@ -346,12 +346,12 @@ public class XMLSignatureVerification {
 				
 			} catch (XPathException e) {
 				throw new InvalidDocumentException(
-						"Error verifying the existence of references in ds:SignedInfo." +
-						"Error getting element with Type http://uri.etsi.org/01903#SignedProperties");
+						"Chyba overenia existencie referencií v ds:SignedInfo." +
+						"Chyba získania elementu Type http://uri.etsi.org/01903#SignedProperties");
 			}
 			
 			if (signedInfoReferenceElement == null) {
-				throw new InvalidDocumentException("No reference in xades:SignedProperties element for ds:Reference element");
+				throw new InvalidDocumentException("Chýba referencia xades:SignedProperties element na ds:Reference element");
 			}
 		}
 	}
@@ -541,7 +541,7 @@ public class XMLSignatureVerification {
 				referenceElements = XPathAPI.selectNodeList(manifestElement, "ds:Reference");
 				
 			} catch (XPathException e) {
-				throw new InvalidDocumentException(manifestElement + ": ds:Reference not found !");
+				throw new InvalidDocumentException(manifestElement + ": ds:Reference nenájdený !");
 			}
 
 			// každý ds:Manifest element musí obsahovať práve jednu referenciu na ds:Object,
@@ -582,7 +582,7 @@ public class XMLSignatureVerification {
 			
 			// overenie hodnoty Type atribútu voči profilu XAdES_ZEP
 			if (!Util.checkAttributeValue((Element)referenceElements.item(0), "Type", "http://www.w3.org/2000/09/xmldsig#Object")) {
-				throw new InvalidDocumentException(manifestElement + " Type wrong URL !");
+				throw new InvalidDocumentException(manifestElement + " Type chybná URL !");
 			}
 		}
 		return true;
@@ -624,18 +624,18 @@ public class XMLSignatureVerification {
 					objectElementBytes = fromElementToString(objectElement).getBytes();
 				
 				} catch (TransformerException e) {
-					throw new InvalidDocumentException("Error transform to byte !");
+					throw new InvalidDocumentException("Chyba transformácie na bajty !");
 				}
 				
 				if ("http://www.w3.org/TR/2001/REC-xml-c14n-20010315".equals(transformMethod)) {
-					
+
 					try {
 						Canonicalizer canonicalizer = Canonicalizer.getInstance(transformMethod);
 						objectElementBytes = canonicalizer.canonicalize(objectElementBytes);
-						
+
 					} catch (SAXException | InvalidCanonicalizerException | CanonicalizationException | ParserConfigurationException | IOException e) {
 						e.printStackTrace();
-						throw new InvalidDocumentException("Error canonicalizer !");
+						throw new InvalidDocumentException("chyba kanonikalizácie !");
 					}
 				}
 				
@@ -648,14 +648,14 @@ public class XMLSignatureVerification {
 					messageDigest = MessageDigest.getInstance(digestMethod);
 					
 				} catch (NoSuchAlgorithmException e) {
-					throw new InvalidDocumentException("MessageDigest algo doesnt exist !");
+					throw new InvalidDocumentException("MessageDigest algortimus neexistuje !");
 				}
 				
 				String actualDigestValue = new String(Base64.encode(messageDigest.digest(objectElementBytes)));
 				String expectedDigestValue = digestValueElement.getTextContent();
 				
 				if (!expectedDigestValue.equals(actualDigestValue)) {
-					throw new InvalidDocumentException("Manifest Reference Digest value not same !");
+					throw new InvalidDocumentException("Manifest Reference Digest hodnota nie je rovnaká !");
 				}
 			}
 		}
@@ -693,7 +693,7 @@ public class XMLSignatureVerification {
 			referencesElements = XPathAPI.selectNodeList(document.getDocumentElement(), "//ds:Signature/ds:SignedInfo/ds:Reference");
 		
 		} catch (XPathException e) {
-			throw new InvalidDocumentException("ds:Signature/ds:SignedInfo/ds:Reference not found");
+			throw new InvalidDocumentException("ds:Signature/ds:SignedInfo/ds:Reference nenájdené !");
 		}
 		
 		for (int i=0; i<referencesElements.getLength(); i++) {
@@ -711,7 +711,7 @@ public class XMLSignatureVerification {
 			Element digestMethodElement = (Element) referenceElement.getElementsByTagName("ds:DigestMethod").item(0);
 			
 			if (Util.checkAttributeValue(digestMethodElement, "Algorithm", digestMethods) == false) {
-				throw new InvalidDocumentException("ds:DigestMethod error");
+				throw new InvalidDocumentException("Chyba v ds:DigestMethod");
 			}
 			
 			String digestMethod = digestMethodElement.getAttribute("Algorithm");
@@ -723,7 +723,7 @@ public class XMLSignatureVerification {
 				manifestElementBytes = fromElementToString(manifestElement).getBytes();
 			
 			} catch (TransformerException e) {
-				throw new InvalidDocumentException("Core validation error element to string");
+				throw new InvalidDocumentException("Core validation chyba pri transformácii elementu na string !");
 			}
 			
 			NodeList transformsElements = manifestElement.getElementsByTagName("ds:Transforms");
@@ -740,7 +740,7 @@ public class XMLSignatureVerification {
 						manifestElementBytes = canonicalizer.canonicalize(manifestElementBytes);
 						
 					} catch (SAXException | InvalidCanonicalizerException | CanonicalizationException | ParserConfigurationException | IOException e) {
-						throw new InvalidDocumentException("Core validation canonical error");
+						throw new InvalidDocumentException("Core validation chyba kanonikalizácie !");
 					}
 				}
 			}
@@ -751,12 +751,12 @@ public class XMLSignatureVerification {
 				messageDigest = MessageDigest.getInstance(digestMethod);
 				
 			} catch (NoSuchAlgorithmException e) {
-				throw new InvalidDocumentException("Core validation alg error");
+				throw new InvalidDocumentException("Core validation chyba algoritmu !");
 			}
 			String actualDigestValue = new String(Base64.encode(messageDigest.digest(manifestElementBytes)));
 
 			if (expectedDigestValue.equals(actualDigestValue) == false) {			
-				throw new InvalidDocumentException("Core validation error digest not same");
+				throw new InvalidDocumentException("Core validation - hodnota digestValue nie je rovnaká !");
 			}
 		}
 		return true;
@@ -774,7 +774,7 @@ public class XMLSignatureVerification {
 		try {
 			signedInfoElementBytes = fromElementToString(signedInfoElement).getBytes();
 		} catch (TransformerException e) {
-			throw new InvalidDocumentException("Error transform to byte");
+			throw new InvalidDocumentException("Chyba transformácie na byty !");
 		}
 		
 		String canonicalizationMethod = canonicalizationMethodElement.getAttribute("Algorithm");
@@ -784,7 +784,7 @@ public class XMLSignatureVerification {
 			signedInfoElementBytes = canonicalizer.canonicalize(signedInfoElementBytes);
 			
 		} catch (SAXException | InvalidCanonicalizerException | CanonicalizationException | ParserConfigurationException | IOException e) {
-			throw new InvalidDocumentException("Error canonicalizer");
+			throw new InvalidDocumentException("Chyba kanonikalizácie !");
 		}
 		
 		X509CertificateObject certificate = null;
@@ -792,7 +792,7 @@ public class XMLSignatureVerification {
 			certificate = Util.getCertificate(document);
 			
 		} catch (XPathExpressionException e) {
-			throw new InvalidDocumentException("Certificate not found");
+			throw new InvalidDocumentException("Certifikát nebol nájdený !");
 		}
 		
 		String signatureMethod = signatureMethodElement.getAttribute("Algorithm");
@@ -805,7 +805,7 @@ public class XMLSignatureVerification {
 			signer.update(signedInfoElementBytes);
 			
 		} catch (NoSuchAlgorithmException | InvalidKeyException | SignatureException e1) {
-			throw new InvalidDocumentException("Core validation error");
+			throw new InvalidDocumentException("Core validation chyba");
 		}
 		
 		byte[] signatureValueBytes = signatureValueElement.getTextContent().getBytes();
@@ -817,11 +817,11 @@ public class XMLSignatureVerification {
 			verificationResult = signer.verify(decodedSignatureValueBytes);
 			
 		} catch (SignatureException e1) {
-			throw new InvalidDocumentException("Core validation error - verification dig sig error");
+			throw new InvalidDocumentException("Core validation chyba overenia SignatureValue !");
 		}
 		
 		if (verificationResult == false) {
-			throw new InvalidDocumentException("Core validation error - verify ds:SignedInfo, ds:SignatureValue not same");
+			throw new InvalidDocumentException("Core validation chyba overenia ds:SignedInfo a ds:SignatureValue nie sú rovnaké !");
 		}
 		return true;
 	}

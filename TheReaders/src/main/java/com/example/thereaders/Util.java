@@ -68,19 +68,19 @@ public class Util {
 		Element keyInfoElement = (Element) document.getElementsByTagName("ds:KeyInfo").item(0);
 		
 		if (keyInfoElement == null) {
-			throw new InvalidDocumentException("Error getting certificate: document does not contain an element ds:KeyInfo");
+			throw new InvalidDocumentException("Chyba pri získaní certifikátu: dokument neobsahuje element ds:KeyInfo");
 		}
 		
 		Element x509DataElement = (Element) keyInfoElement.getElementsByTagName("ds:X509Data").item(0);
 		
 		if (x509DataElement == null) {
-			throw new InvalidDocumentException("Error getting certificate: document does not contain an element ds:X509Data");
+			throw new InvalidDocumentException("Chyba pri získaní certifikátu: dokument neobsahuje element ds:X509Data");
 		}
 		
 		Element x509Certificate = (Element) x509DataElement.getElementsByTagName("ds:X509Certificate").item(0);
 
 		if (x509Certificate == null) {
-			throw new InvalidDocumentException("Error getting certificate: document does not contain an element ds:X509Certificate");
+			throw new InvalidDocumentException("Chyba pri získaní certifikátu: dokument neobsahuje element ds:X509Certificate");
 		}
 		
 		X509CertificateObject certObject = null;
@@ -93,10 +93,10 @@ public class Util {
 			
 		} catch (java.security.cert.CertificateParsingException e) {
 			
-			throw new InvalidDocumentException("Could not load certificate");
+			throw new InvalidDocumentException("Nie je možné načítať certifikát !");
 			
 		} catch (IOException e) {
-			throw new InvalidDocumentException("Could not load certificate");
+			throw new InvalidDocumentException("Nie je možné načítať certifikát !");
 		} finally {
 			
 			closeQuietly(inputStream);
@@ -201,7 +201,7 @@ public class Util {
 			}
 		}
 		catch (IOException e) {
-			System.err.printf ("Failed while reading bytes from %s: %s", urlHandler.toExternalForm(), e.getMessage());
+			System.err.printf ("Chyba pri čítaní bytov %s: %s", urlHandler.toExternalForm(), e.getMessage());
 			return null;
 		}
 		finally {
